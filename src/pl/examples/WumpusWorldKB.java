@@ -4,7 +4,9 @@ import pl.core.Biconditional;
 import pl.core.Disjunction;
 import pl.core.KB;
 import pl.core.Negation;
+import pl.core.Sentence;
 import pl.core.Symbol;
+import pl.sln.TTEnum;
 
 public class WumpusWorldKB extends KB {
 	
@@ -27,6 +29,12 @@ public class WumpusWorldKB extends KB {
 
 	public static void main(String[] argv) {
 		new WumpusWorldKB().dump();
+		
+		WumpusWorldKB wwkb = new WumpusWorldKB();
+		Sentence alpha = new Symbol("P1,2");
+		
+		TTEnum ttenum = new TTEnum();
+		System.out.println(ttenum.TT_Entails(wwkb, alpha));
 	}
 
 }

@@ -1,6 +1,7 @@
 package pl.examples;
 
 import pl.core.*;
+import pl.sln.TTEnum;
 
 public class ModusPonensKB extends KB {
 	
@@ -14,6 +15,12 @@ public class ModusPonensKB extends KB {
 	
 	public static void main(String[] argv) {
 		new ModusPonensKB().dump();
+		
+		ModusPonensKB mpkb = new ModusPonensKB();
+		Sentence alpha = new Symbol("Q");
+		
+		TTEnum ttenum = new TTEnum();
+		System.out.println(ttenum.TT_Entails(mpkb, alpha));
 	}
 
 }
