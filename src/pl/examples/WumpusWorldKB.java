@@ -6,6 +6,7 @@ import pl.core.KB;
 import pl.core.Negation;
 import pl.core.Sentence;
 import pl.core.Symbol;
+import pl.sln.PLProver;
 import pl.sln.TTEnum;
 
 public class WumpusWorldKB extends KB {
@@ -35,6 +36,9 @@ public class WumpusWorldKB extends KB {
 		
 		TTEnum ttenum = new TTEnum();
 		System.out.println(ttenum.TT_Entails(wwkb, alpha));
+		
+		PLProver plprover = new PLProver();
+		System.out.println(plprover.entails(wwkb, alpha));
 	}
 
 }
