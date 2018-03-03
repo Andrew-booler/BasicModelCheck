@@ -22,6 +22,22 @@ import pl.util.ArraySet;
  * to be the sum of the hash codes of the elements in the set.</q>
  */
 public class Clause extends ArraySet<Literal> {
+	
+	/**
+	 * default constructor
+	 */
+	public Clause () {
+		super();
+	}
+	
+	/**
+	 * copy constructor
+	 * @param c: an existing Clause object
+	 */
+	public Clause (Clause c) {
+		super(c.elements);
+	}
+	
 
 	/**
 	 * Return a new Clause constructed from the given Sentence, which

@@ -13,38 +13,39 @@ import pl.core.KB;
 import pl.core.Negation;
 import pl.core.Sentence;
 import pl.prover.Prover;
-import pl.util.ArraySet;
 
 public class PLProver implements Prover {
 
 	@Override
 	public boolean entails(KB kb, Sentence alpha) {
-		// TODO Auto-generated method stub
-		Set<Clause> clauses= new HashSet<Clause>();
+		// store all clauses from KB
+		Set<Clause> clauses = new HashSet<Clause>();
 		for (Sentence s : kb.sentences()) {
 			Set<Clause> c = CNFConverter.convert(s);
 			clauses.addAll(c);
 		}
-		
+		// add clauses from alpha
 		clauses.addAll(CNFConverter.convert(new Negation(alpha)));
 		
+		// an empty set
 		Set<Clause> new_clauses = new HashSet<Clause>();
 		
 		while (true) {
-			List<Clause> obj = new ArrayList<Clause>(clauses);
-			for (int i = 0; i < obj.size(); i++) {
-				for (int j = i; j < obj.size(); j++) {
-					Clause o1= obj.get(i);
-					Clause o2= obj.get(j);
-					if (hasComplementary(obj.get(i), obj.get(j))) {
-						ArraySet<Literal> resolvents = PLResolve(obj.get(i), obj.get(j));
-						if (resolvents.size() == 0) {
+			List<Clause> clauses_list = new ArrayList<Clause>(clauses);
+			for (int i = 0; i < clauses_list.size(); i++) {
+				for (int j = i + 1; j < clauses_list.size(); j++) {
+					Clause ci = clauses_list.get(i);
+					Clause cj = clauses_list.get(j);
+					Set<Clause> resolvents = PLResolve(ci, cj);
+					// check whether the resolvents contains empty clause
+					for (Clause c : resolvents) {	
+						if (c.size() == 0) {
 							return true;
 						}
-						new_clauses.add((Clause)resolvents);
+					}
+					new_clauses.addAll(resolvents);
 					}
 				}
-			}
 			if (clauses.containsAll(new_clauses)) {
 				return false;
 			}
@@ -52,47 +53,32 @@ public class PLProver implements Prover {
 		}
 	}
 	
-	protected boolean hasComplementary(Clause ci, Clause cj) {
+	protected Set<Clause> PLResolve(Clause ci, Clause cj) {
+		// an empty set
+		Set<Clause> resolvents = new HashSet<Clause>();
+		
 		for (Iterator<Literal> ci_iter = ci.iterator(); ci_iter.hasNext(); ) {
 			Literal li = ci_iter.next();
 			for (Iterator<Literal> cj_iter = cj.iterator(); cj_iter.hasNext(); ) {
 				Literal lj = cj_iter.next();
-				if (li.getContent() == lj.getContent() && li.getPolarity() != lj.getPolarity()) {
-					
-					return true;
-				}
-			}
-		}
-		
-		return false;
-	}
-	
-	protected ArraySet<Literal> PLResolve(Clause ci, Clause cj) {
-		
-		ArraySet<Literal> ci_copy = new ArraySet<Literal>(0);
-		for (Iterator<Literal> ci_iter = ci.iterator(); ci_iter.hasNext(); ) {
-			ci_copy.add(ci_iter.next());
-		}
-		ArraySet<Literal> cj_copy = new ArraySet<Literal>(0);
-		for (Iterator<Literal> cj_iter = cj.iterator(); cj_iter.hasNext(); ) {
-			cj_copy.add(cj_iter.next());
-		}
-		
-		for (Iterator<Literal> ci_iter = ci_copy.iterator(); ci_iter.hasNext(); ) {
-			Literal li = ci_iter.next();
-			for (Iterator<Literal> cj_iter = cj_copy.iterator(); cj_iter.hasNext(); ) {
-				Literal lj = cj_iter.next();
-				if (li.getContent() == lj.getContent() && li.getPolarity() != lj.getPolarity()) {
-					ci.remove(li);
-					cj.remove(lj);
+				if (li.getContent().equals(lj.getContent()) && li.getPolarity() != lj.getPolarity()) {
+					// copy a clause
+					Clause ci_copy = new Clause(ci);
+					// remove complementary
+					ci_copy.remove(li);
+					// copy a clause
+					Clause cj_copy = new Clause(cj);
+					// remove complementary
+					cj_copy.remove(lj);
+					// combine two clauses
 					ci_copy.addAll(cj_copy);
-					
-					return ci_copy;
+					// add to resolvents
+					resolvents.add(ci_copy);
 				}
 			}
 		}
 		
-		return ci_copy;	// actually unreachable
+		return resolvents;
 	}
 
 }

@@ -10,7 +10,7 @@ public class ModusPonensKB extends KB {
 		super();
 		Symbol p = intern("P");
 		Symbol q = intern("Q");
-		add(q);
+		add(p);
 		add(new Implication(p, q));
 	}
 	
@@ -18,7 +18,7 @@ public class ModusPonensKB extends KB {
 		new ModusPonensKB().dump();
 		
 		ModusPonensKB mpkb = new ModusPonensKB();
-		Sentence alpha = new Symbol("P");
+		Sentence alpha = new Symbol("Q");
 		
 		TTEnum ttenum = new TTEnum();
 		System.out.println(ttenum.TT_Entails(mpkb, alpha));
