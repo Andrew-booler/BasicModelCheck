@@ -34,6 +34,8 @@ public class PLProver implements Prover {
 			List<Clause> obj = new ArrayList<Clause>(clauses);
 			for (int i = 0; i < obj.size(); i++) {
 				for (int j = i; j < obj.size(); j++) {
+					Clause o1= obj.get(i);
+					Clause o2= obj.get(j);
 					if (hasComplementary(obj.get(i), obj.get(j))) {
 						ArraySet<Literal> resolvents = PLResolve(obj.get(i), obj.get(j));
 						if (resolvents.size() == 0) {
@@ -68,11 +70,11 @@ public class PLProver implements Prover {
 	protected ArraySet<Literal> PLResolve(Clause ci, Clause cj) {
 		
 		ArraySet<Literal> ci_copy = new ArraySet<Literal>(0);
-		for (Iterator<Literal> ci_iter = ci_copy.iterator(); ci_iter.hasNext(); ) {
+		for (Iterator<Literal> ci_iter = ci.iterator(); ci_iter.hasNext(); ) {
 			ci_copy.add(ci_iter.next());
 		}
 		ArraySet<Literal> cj_copy = new ArraySet<Literal>(0);
-		for (Iterator<Literal> cj_iter = cj_copy.iterator(); cj_iter.hasNext(); ) {
+		for (Iterator<Literal> cj_iter = cj.iterator(); cj_iter.hasNext(); ) {
 			cj_copy.add(cj_iter.next());
 		}
 		
