@@ -38,7 +38,6 @@ public class Clause extends ArraySet<Literal> {
 		super(c.elements);
 	}
 	
-
 	/**
 	 * Return a new Clause constructed from the given Sentence, which
 	 * must be a disjunction of literals (i.e., an AtomicSentence, the
