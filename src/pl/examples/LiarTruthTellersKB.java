@@ -18,12 +18,12 @@ public class LiarTruthTellersKB extends KB {
 		Symbol a = intern("Amy is truthful");
 		Symbol b = intern("Bob is truthful");
 		Symbol c = intern("Cal is truthful");
-		if (version<=1) 
+		if (version <= 1) 
 		{
 			add(new Biconditional(a, new Conjunction(a, c)));
 			add(new Biconditional(b, new Negation(c)));
 			add(new Biconditional(c, new Disjunction(b, new Negation(a))));
-		}else {
+		} else {
 			add(new Biconditional(a, new Negation(c)));
 			add(new Biconditional(b, new Conjunction(a,c)));
 			add(new Biconditional(c, b));
@@ -57,6 +57,7 @@ public class LiarTruthTellersKB extends KB {
 		System.out.println(q3 + " : " + plprover.entails(lttkb, q3));
 		
 		System.out.println("\n--------------------------------------------------------------");
+		
 		System.out.println("\nCase 4-(b):");
 		lttkb = new LiarTruthTellersKB(2);
 		lttkb.dump();
