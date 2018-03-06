@@ -41,7 +41,9 @@ public class DoorEnlightKB extends KB {
 			add(new Biconditional(g, new Implication(c, f)));
 			add(new Biconditional(h, new Implication(new Conjunction(g, h), a)));
 		} else if (version == 2) {
-			
+			add(new Biconditional(a, x));
+			add(a);
+			add(new Biconditional(h, new Implication(new Conjunction(g, h), a)));
 		} else {
 			System.out.println("No such case!");
 		}
@@ -77,7 +79,29 @@ public class DoorEnlightKB extends KB {
 		System.out.println("\n--------------------------------------------------------------");
 		
 		System.out.println("\nCase 4-(b):");
-
+		dfkb = new DoorEnlightKB(2);
+		dfkb.dump();
+		queries = new ArrayList<Sentence>();
+		queries.add(dfkb.intern("X is a good door."));
+		queries.add(dfkb.intern("Y is a good door."));
+		queries.add(dfkb.intern("Z is a good door."));
+		queries.add(dfkb.intern("W is a good door."));
+		
+		System.out.println("\n");
+		
+		System.out.println("Test using model checking:");
+		for (Sentence s : queries) {
+			TTEnum ttenum = new TTEnum();
+			System.out.println(s + " : " + ttenum.TT_Entails(dfkb, s));
+		}
+		
+		System.out.println("\n");
+		
+		System.out.println("Test using propositional inference:");
+		for (Sentence s : queries) {
+			PLProver plprover = new PLProver();
+			System.out.println(s + " : " + plprover.entails(dfkb, s));
+		}
 	}
 
 }
