@@ -20,11 +20,17 @@ public class ModusPonensKB extends KB {
 		ModusPonensKB mpkb = new ModusPonensKB();
 		Sentence alpha = new Symbol("Q");
 		
+		System.out.println("\n");
+		
 		TTEnum ttenum = new TTEnum();
-		System.out.println(ttenum.TT_Entails(mpkb, alpha));
+		System.out.println("Test using model checking:");
+		System.out.println(alpha + " is " + ttenum.TT_Entails(mpkb, alpha));
+		
+		System.out.println("\n");
 		
 		PLProver plprover = new PLProver();
-		System.out.println(plprover.entails(mpkb, alpha));
+		System.out.println("Test using propositional inference:");
+		System.out.println(alpha + " is " + plprover.entails(mpkb, alpha));
 	}
 
 }

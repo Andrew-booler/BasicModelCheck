@@ -34,11 +34,17 @@ public class WumpusWorldKB extends KB {
 		WumpusWorldKB wwkb = new WumpusWorldKB();
 		Sentence alpha = new Symbol("P1,2");
 		
+		System.out.println("\n");
+		
 		TTEnum ttenum = new TTEnum();
-		System.out.println(ttenum.TT_Entails(wwkb, alpha));
+		System.out.println("Test using model checking:");
+		System.out.println(alpha + " is " + ttenum.TT_Entails(wwkb, alpha));
+		
+		System.out.println("\n");
 		
 		PLProver plprover = new PLProver();
-		System.out.println(plprover.entails(wwkb, alpha));
+		System.out.println("Test using propositional inference:");
+		System.out.println(alpha + " is " + plprover.entails(wwkb, alpha));
 	}
 
 }

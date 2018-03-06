@@ -50,16 +50,20 @@ public class DoorEnlightKB extends KB {
 		queries.add(dfkb.intern("Z is a good door."));
 		queries.add(dfkb.intern("W is a good door."));
 		
+		System.out.println("\n");
+		
+		System.out.println("Test using model checking:");
 		for (Sentence s : queries) {
 			TTEnum ttenum = new TTEnum();
-			System.out.println(ttenum.TT_Entails(dfkb, s));
+			System.out.println(s + " : " + ttenum.TT_Entails(dfkb, s));
 		}
 		
 		System.out.println("\n");
 		
+		System.out.println("Test using propositional inference:");
 		for (Sentence s : queries) {
 			PLProver plprover = new PLProver();
-			System.out.println(plprover.entails(dfkb, s));
+			System.out.println(s + " : " + plprover.entails(dfkb, s));
 		}
 
 	}

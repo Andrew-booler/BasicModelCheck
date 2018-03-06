@@ -60,16 +60,20 @@ public class MoreLiarsTruthTellersKB extends KB {
 		queries.add(mlttkb.intern("Kay is a truth-teller."));
 		queries.add(mlttkb.intern("Lee is a truth-teller."));
 		
+		System.out.println("\n");
+		
+		System.out.println("Test using model checking:");
 		for (Sentence s : queries) {
 			TTEnum ttenum = new TTEnum();
-			System.out.println(ttenum.TT_Entails(mlttkb, s));
+			System.out.println(s + " : " + ttenum.TT_Entails(mlttkb, s));
 		}
 		
 		System.out.println("\n");
 		
+		System.out.println("Test using propositional inference:");
 		for (Sentence s : queries) {
 			PLProver plprover = new PLProver();
-			System.out.println(plprover.entails(mlttkb, s));
+			System.out.println(s + " : " + plprover.entails(mlttkb, s));
 		}
 	}
 }
