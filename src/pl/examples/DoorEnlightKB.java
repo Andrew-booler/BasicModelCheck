@@ -78,7 +78,7 @@ public class DoorEnlightKB extends KB {
 		
 		System.out.println("\n--------------------------------------------------------------");
 		
-		System.out.println("\nCase 4-(b):");
+		System.out.println("\nCase 6-(b):");
 		dfkb = new DoorEnlightKB(2);
 		dfkb.dump();
 		queries = new ArrayList<Sentence>();
